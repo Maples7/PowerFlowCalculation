@@ -62,3 +62,6 @@ class Load:
         self.a = a
         self.b = b
 load = []
+
+# number of iterations
+iter = 0            

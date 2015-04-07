@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+Ôªø# -*- coding: UTF-8 -*-
 
 # Name:         PowerFlowCalculation.py
 # Func:         To calc the power flow of elecrtcal grid using Newton-Raphson method, this is the main file of this project
@@ -9,6 +9,7 @@
 
 import globalVariable as gv
 import numpy as np
+from math import *
 
 def read_data():
     """
@@ -50,7 +51,7 @@ def read_data():
 
         fp.close()
     except:
-        print "Error: ∂¡»° input.txt ¥ÌŒÛ£® ‰»Î ˝æ›¥ÌŒÛ£©"
+        print "Error: Can't input Data into input.txt. (function read_data() error)"
         exit()
 
 def admt_matrix():
@@ -87,7 +88,7 @@ def admt_matrix():
 
 def Um_and_Ua():
     """
-    ∏¯∂®µÁ—πµƒ”––ß÷µ∫Õœ‡Œª≥ı÷µ
+    Set the amplitude and phase angle of voltage
     """
     global Um
     global Ua
@@ -97,8 +98,45 @@ def Um_and_Ua():
         if gv.gene[i].j <= 0:
             Um[gv.gene[i].i] = gv.gene[i].c
 
+def form_Jacobian():
+    """
+    Form Jacobian Matrix & Calc the Power error
+    """
+    global Um
+    global Ua
+    global Y
+    nu = 2*gv.num_node+1
+    n2 = 2*gv.num_node
+    for i in range(1, gv.num_node+1):
+        vi = Um[i]
+        di = Ua[i]
+        dp = 0.0
+        dq = 0.0
+        for j in range(1, gv.num_node+1):
+            if j != i:                  # when i <> j
+                g = Y[i][j].real        # G        
+                b = Y[i][j].imag        # B
+                vj = Um[j]
+                dj = Ua[j]
+                dij = di - dj           # diff of Phase Angle
+                Hij = -Um[i] * Um[j] * (g*sin(dij) - b*cos(dij))
+                Lij = Hij
+                Jacob[i][j] = Hij
+                Jacob[i+gv.num_node][j+gv.num_node] = Lij
+                Nij = -Um[i]*Um[j]*(g*cos(dij)+b*sin(dij))
+                Mij = -Nij
+                Jacob[i][j+gv.num_load]=Nij
+                Jacob[i+gv.num_load][j] = Mij
+                p = 
 
 # main 
 read_data()
 admt_matrix()
 Um_and_Ua()
+
+Jocob = np.zeros_like((2*gv.num_node, 2*gv.num_load+1))
+P = np.zeros_like(gv.num_node+1)
+Q = np.zeros_like(gv.num_node+1)
+
+while True:
+    form_Jacobian();
