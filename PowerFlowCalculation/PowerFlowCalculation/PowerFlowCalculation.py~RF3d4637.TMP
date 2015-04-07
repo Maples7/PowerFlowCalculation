@@ -1,0 +1,19 @@
+# -*- coding: UTF-8 -*-
+
+# Name:         PowerFlowCalculation.py
+# Func:         To calc the power flow of elecrtcal grid, this is the main file of this project
+# Author:       Maples7
+# Addr:         EE of SDU
+# Time:         2015-04-07 
+# Link:         http://www.cnblogs.com/maples7/
+
+import globalVariable as gv
+
+def read_data():
+    try:
+        fp = open("input.txt", "r+")
+        gv.num_node, gv.num_line, gv
+        fp.close()
+    except:
+        print "Error: ∂¡»° input.txt ¥ÌŒÛ"
+        exit()
