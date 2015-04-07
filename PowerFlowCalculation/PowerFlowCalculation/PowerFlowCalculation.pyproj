@@ -22,6 +22,9 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="globalVariable.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="PowerFlowCalculation.py" />
   </ItemGroup>
   <PropertyGroup>
