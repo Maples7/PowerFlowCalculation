@@ -23,7 +23,8 @@ num_gene = 0
 num_load = 0
 
 # admissible error of the unbalance of node power
-error = 0.0
+error_max = 0.0
+
 
 # obj of lines and parallel capacitors
 class Line:
@@ -62,6 +63,4 @@ class Load:
         self.a = a
         self.b = b
 load = []
-
-# number of iterations
-iter = 0            
+          
