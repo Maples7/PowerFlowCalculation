@@ -380,6 +380,8 @@ P = np.zeros(gv.num_node+1)
 Q = np.zeros(gv.num_node+1)
 
 iter = 0  
+x_axis = []             # for drawing graph
+y_axis = []             # for drawing graph
 while True:
     form_Jacobian()
     error = 0.0
@@ -387,6 +389,8 @@ while True:
         if fabs(Jacob[i][2*gv.num_node+1]) > error:
             error = fabs(Jacob[i][2*gv.num_node+1])
     fou.write("Times of iteration: %2d\t\tThe maximum power error: %11.6f\n" %(iter+1, error))
+    x_axis.append(iter+1)           # for drawing graph   
+    y_axis.append(error)            # for drawing graph
     if error < gv.error_max:
         node_flow()
         branch_flow()

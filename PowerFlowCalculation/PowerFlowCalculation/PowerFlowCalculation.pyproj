@@ -5,7 +5,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>56087c25-23d2-4881-9819-22cb2fe7c15d</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>PowerFlowCalculation.py</StartupFile>
+    <StartupFile>DrawConvergenceGraph.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -22,6 +22,9 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="DrawConvergenceGraph.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="globalVariable.py">
       <SubType>Code</SubType>
     </Compile>
