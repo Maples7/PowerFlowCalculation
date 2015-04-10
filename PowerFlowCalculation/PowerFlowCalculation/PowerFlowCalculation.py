@@ -3,7 +3,7 @@
 # Name:         PowerFlowCalculation.py
 # Func:         To calc the power flow of elecrtcal grid using Newton-Raphson method, this is the main file of this project
 # Author:       Maples7
-# Addr:         EE of SDU
+# Addr:         EE of SDU, China
 # Time:         2015-04-07 
 # Link:         http://www.cnblogs.com/maples7/
 
@@ -20,7 +20,6 @@ def read_data():
     """
     Read Data from input.txt, the global variables are in the globalVariable.py
     """
-    global fp
     try:
         fp = open("input.txt", "r+")
 
@@ -256,6 +255,8 @@ def branch_flow():
     fou.write("\n\n\ti\tj\tPij\tQij\tPji\tQji\tdP\tdQ\n\n")
     ph, qh = 0.0, 0.0
     for p in gv.line:
+        if p == None:
+            continue
         i = p.i
         j = p.j
         r = p.a
@@ -294,6 +295,8 @@ def branch_flow():
             qh += dqb
         fou.write(" %3d  %3d %10.5f %10.5f %10.5f %10.5f %10.5f %10.5f\n" %(i, j, pij, qij, pji, qji, dpb, dqb))
     for p in gv.tran:
+        if p == None:
+            continue
         i = p.i
         j = p.j
         r = p.a
@@ -353,11 +356,12 @@ def solv_Eqn():
             Jacob[i][nu] = Jacob[i][nu] - Jacob[i][j]*Jacob[j][nu]
 
 def close_file():
+    """
+    close output.txt
+    """
     global fou
-    global fp
     try:
         fou.close()
-        fp.close()
     except:
         print "Error: Close Files Error. (function close_file() error)"
         exit()

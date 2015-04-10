@@ -3,7 +3,7 @@
 # Name:         globalVariable.py
 # Func:         To state the all global variables of this project
 # Author:       Maples7
-# Addr:         EE of SDU
+# Addr:         EE of SDU, China
 # Time:         2015-04-07 
 # Link:         http://www.cnblogs.com/maples7/
 
