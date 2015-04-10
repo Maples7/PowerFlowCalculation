@@ -129,8 +129,9 @@ def form_Jacobian():
     global P 
     global Q
     global Y
-    nu = 2*gv.num_node + 1
+
     n2 = 2*gv.num_node
+    nu = n2 + 1
     for i in range(1, gv.num_node+1):
         vi = Um[i]
         di = Ua[i]
@@ -149,8 +150,8 @@ def form_Jacobian():
                 Jacob[i+gv.num_node][j+gv.num_node] = Lij
                 Nij = -Um[i]*Um[j]*(g*cos(dij)+b*sin(dij))
                 Mij = -Nij
-                Jacob[i][j+gv.num_load]=Nij
-                Jacob[i+gv.num_load][j] = Mij
+                Jacob[i][j+gv.num_node]=Nij
+                Jacob[i+gv.num_node][j] = Mij
                 p = Um[j]*(g*cos(dij)+b*sin(dij))
                 q = Um[j]*(g*sin(dij)-b*cos(dij))
                 dp += p
@@ -163,8 +164,8 @@ def form_Jacobian():
         Lii = -vi*dq + 2*vi*vi*b
         Jacob[i][i] = Hii
         Jacob[i][i+gv.num_node] = Nii
-        Jacob[i+gv.num_load][i] = Mii
-        Jacob[i+gv.num_load][i+gv.num_load] = Lii
+        Jacob[i+gv.num_node][i] = Mii
+        Jacob[i+gv.num_node][i+gv.num_node] = Lii
         Jacob[i][nu] = -vi*(dp+vi*g)
         Jacob[i+gv.num_node][nu] = -vi*(dq-vi*b)
         P[i] = vi * (dp+vi*g)
@@ -208,10 +209,12 @@ def node_flow():
     global fou
     global P
     global Q
+    global Um
+    global Ua
     fou.write("\n\n\n\t\t* - * - * - Rasult of Power Flow Calculation * - * - * -")
-    fou.write("\n\n\t\t\t-------power flow of nodes-------")
-    fou.write("\n\n\tno.i\tUm\tUa\tPG\tQG\tPL\QL\n\n")
-    for i in range(1, num_node+1):
+    fou.write("\n\n\t\t\t\t-------power flow of nodes-------")
+    fou.write("\n\n\tno.i\t\tUm\t\tUa\t\tPG\t\tQG\t\tPL\t\tQL\n\n")
+    for i in range(1, gv.num_node+1):
         b1,b2,c1,c2 = 0.0, 0.0, 0.0, 0.0
         for j in range(1, gv.num_gene+1):
             ii = gv.gene[j].i
@@ -236,7 +239,7 @@ def node_flow():
                     c1 = gv.load[k].a
                     c2 = gv.load[k].b
                     b2 += c2
-            break
+            # break  ????????  
         for j in range(1, gv.num_load+1):
             ii = gv.load[j].i
             if i == ii:
@@ -251,8 +254,8 @@ def branch_flow():
     """
     global Um
     global Ua
-    fou.write("\n\n\t\t\t-------power flow of branches-------")
-    fou.write("\n\n\ti\tj\tPij\tQij\tPji\tQji\tdP\tdQ\n\n")
+    fou.write("\n\n\t\t\t\t-------power flow of branches-------")
+    fou.write("\n\n\ti\tj\t\tPij\t\tQij\t\tPji\t\tQji\t\tdP\t\tdQ\n\n")
     ph, qh = 0.0, 0.0
     for p in gv.line:
         if p == None:
@@ -327,7 +330,7 @@ def branch_flow():
         dpb = qij + qji
         qh += dpb
         fou.write(" %3d  %3d %10.5f %10.5f %10.5f %10.5f %10.5f %10.5f\n" %(i, j, pij, qij, pji, qji, dpb, dqb))
-    fou.write("\n\n\tThe total loss of the system:  -  Active power:%8.5f\tReactive power:%8.5f" %(ph, qh))
+    fou.write("\n\nThe total loss of the system: - Active power:%8.5f\t\tReactive power:%8.5f" %(ph, qh))
 
 def solv_Eqn():
     """
@@ -385,7 +388,6 @@ while True:
             error = fabs(Jacob[i][2*gv.num_node+1])
     fou.write("Times of iteration: %2d\t\tThe maximum power error: %11.6f\n" %(iter+1, error))
     if error < gv.error_max:
-        conv = 1
         node_flow()
         branch_flow()
         break
