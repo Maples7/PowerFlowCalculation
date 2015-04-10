@@ -213,7 +213,7 @@ def node_flow():
     global Ua
     fou.write("\n\n\n\t\t* - * - * - Rasult of Power Flow Calculation * - * - * -")
     fou.write("\n\n\t\t\t\t-------power flow of nodes-------")
-    fou.write("\n\n\tno.i\t\tUm\t\tUa\t\tPG\t\tQG\t\tPL\t\tQL\n\n")
+    fou.write("\n\n\tno.i\t Um\t\t\tUa\t\t\tPG\t\t  QG\t\t PL\t\t\tQL\n\n")
     for i in range(1, gv.num_node+1):
         b1,b2,c1,c2 = 0.0, 0.0, 0.0, 0.0
         for j in range(1, gv.num_gene+1):
@@ -230,16 +230,16 @@ def node_flow():
                         b1 += c1
                         b2 += c2
                 break
-        if i == ii and kk == -1:            # PV nodes
-            b1 = gv.gene[j].a
-            b2 = Q[ii]
-            for k in range(1, gv.num_load+1):
-                ii = gv.load[k].i
-                if i == ii:
-                    c1 = gv.load[k].a
-                    c2 = gv.load[k].b
-                    b2 += c2
-            # break  ????????  
+            if i == ii and kk == -1:            # PV nodes
+                b1 = gv.gene[j].a
+                b2 = Q[ii]
+                for k in range(1, gv.num_load+1):
+                    ii = gv.load[k].i
+                    if i == ii:
+                        c1 = gv.load[k].a
+                        c2 = gv.load[k].b
+                        b2 += c2
+                break 
         for j in range(1, gv.num_load+1):
             ii = gv.load[j].i
             if i == ii:
@@ -255,7 +255,7 @@ def branch_flow():
     global Um
     global Ua
     fou.write("\n\n\t\t\t\t-------power flow of branches-------")
-    fou.write("\n\n\ti\tj\t\tPij\t\tQij\t\tPji\t\tQji\t\tdP\t\tdQ\n\n")
+    fou.write("\n\n\ti\t j\t\tPij\t\t   Qij\t\t  Pji\t\t Qji\t\t dP\t\t   dQ\n\n")
     ph, qh = 0.0, 0.0
     for p in gv.line:
         if p == None:
@@ -274,8 +274,8 @@ def branch_flow():
             qji = 0.0
             dpb = pij
             ph += dpb
-            dpb = qij
-            qh += dpb
+            dqb = qij
+            qh += dqb
         else:
             r = r/b
             x = -x/b
@@ -296,7 +296,7 @@ def branch_flow():
             qji = -vj*(b+x) + x*cd + r*sd
             dqb = qij + qji
             qh += dqb
-        fou.write(" %3d  %3d %10.5f %10.5f %10.5f %10.5f %10.5f %10.5f\n" %(i, j, pij, qij, pji, qji, dpb, dqb))
+        fou.write("  %3d  %3d %10.5f %10.5f %10.5f %10.5f %10.5f %10.5f\n" %(i, j, pij, qij, pji, qji, dpb, dqb))
     for p in gv.tran:
         if p == None:
             continue
@@ -305,7 +305,7 @@ def branch_flow():
         r = p.a
         x = p.b
         t = p.c
-        b = t*(r*r+x+x)
+        b = t*(r*r+x*x)
         r /= b
         x /= -b
         b = t - 1.0
@@ -327,10 +327,10 @@ def branch_flow():
         ph += dpb
         qij = -vi*(xi+x) + x*cd - r*sd
         qji = -vj*(xj+x) + x*cd + r*sd
-        dpb = qij + qji
-        qh += dpb
-        fou.write(" %3d  %3d %10.5f %10.5f %10.5f %10.5f %10.5f %10.5f\n" %(i, j, pij, qij, pji, qji, dpb, dqb))
-    fou.write("\n\nThe total loss of the system: - Active power:%8.5f\t\tReactive power:%8.5f" %(ph, qh))
+        dqb = qij + qji
+        qh += dqb
+        fou.write("  %3d  %3d %10.5f %10.5f %10.5f %10.5f %10.5f %10.5f\n" %(i, j, pij, qij, pji, qji, dpb, dqb))
+    fou.write("\n\n  The total loss of the system: - Active power:%8.5f\t\tReactive power:%8.5f" %(ph, qh))
 
 def solv_Eqn():
     """
