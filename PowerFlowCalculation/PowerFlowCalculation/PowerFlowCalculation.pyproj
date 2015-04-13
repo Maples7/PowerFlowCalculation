@@ -25,7 +25,13 @@
     <Compile Include="DrawConvergenceGraph.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="drawTimesComparisonGraph.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="globalVariable.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="makeInput.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="PowerFlowCalculation.py" />

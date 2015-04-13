@@ -1,0 +1,35 @@
+Times of iteration:  1		The maximum power error:    0.500000
+Times of iteration:  2		The maximum power error:    0.109161
+Times of iteration:  3		The maximum power error:    0.040712
+Times of iteration:  4		The maximum power error:    0.012056
+Times of iteration:  5		The maximum power error:    0.003419
+Times of iteration:  6		The maximum power error:    0.001202
+Times of iteration:  7		The maximum power error:    0.001498
+Times of iteration:  8		The maximum power error:    0.001053
+Times of iteration:  9		The maximum power error:    0.002979
+Times of iteration: 10		The maximum power error:    0.001091
+Times of iteration: 11		The maximum power error:    0.002326
+Times of iteration: 12		The maximum power error:    0.000995
+Times of iteration: 13		The maximum power error:    0.007418
+Times of iteration: 14		The maximum power error:    0.002077
+Times of iteration: 15		The maximum power error:    0.000968
+Times of iteration: 16		The maximum power error:    0.049906
+Times of iteration: 17		The maximum power error:    0.013126
+Times of iteration: 18		The maximum power error:    0.003682
+Times of iteration: 19		The maximum power error:    0.001262
+Times of iteration: 20		The maximum power error:    0.001318
+Times of iteration: 21		The maximum power error:    0.001234
+Times of iteration: 22		The maximum power error:    0.001390
+Times of iteration: 23		The maximum power error:    0.001139
+Times of iteration: 24		The maximum power error:    0.001815
+Times of iteration: 25		The maximum power error:    0.000967
+Times of iteration: 26		The maximum power error:    0.044394
+Times of iteration: 27		The maximum power error:    0.010089
+Times of iteration: 28		The maximum power error:    0.002933
+Times of iteration: 29		The maximum power error:    0.001078
+Times of iteration: 30		The maximum power error:    0.002518
+Times of iteration: 31		The maximum power error:    0.001023
+Times of iteration: 32		The maximum power error:    0.004225
+
+
+		The power flow is Divergence.

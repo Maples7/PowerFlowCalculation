@@ -12,16 +12,21 @@ import numpy as np
 from math import sin, cos, fabs, pi
 
 # const
-MAX_ITER = 10               # max iter times
+MAX_ITER = 30               # max iter times
 DIVERGENCE_ERROR = 1.0e4    
 
+from makeInput import *
+
+if inputFile in locals().keys():
+    inputFile = "input.txt"
 
 def read_data():
     """
     Read Data from input.txt, the global variables are in the globalVariable.py
     """
+    global inputFile
     try:
-        fp = open("input.txt", "r+")
+        fp = open(inputFile, "r+")
 
         firstLine = fp.readline().split(" ")
         gv.num_node = int(firstLine[0])
@@ -60,7 +65,7 @@ def read_data():
 
         fp.close()
     except:
-        print "Error: Can't input Data into input.txt. (function read_data() error)"
+        print "Error: Can't read Data from "+inputFile+". (function read_data() error)"
         exit()
 
 def output_file_ready():
@@ -389,6 +394,7 @@ while True:
         if fabs(Jacob[i][2*gv.num_node+1]) > error:
             error = fabs(Jacob[i][2*gv.num_node+1])
     fou.write("Times of iteration: %2d\t\tThe maximum power error: %11.6f\n" %(iter+1, error))
+    #fou.write("%d %.6f\n" %(iter+1, error))
     x_axis.append(iter+1)           # for drawing graph   
     y_axis.append(error)            # for drawing graph
     if error < gv.error_max:
